@@ -1,1 +1,161 @@
 # OracleSQL
+
+## 01. Introduction and initial database setup
+
+Oracle19c Download details:
+
+https://www.oracle.com/in/database/technologies/oracle19c-windows-downloads.html
+
+
+1. Create a new user in oracle database: 
+
+	Login with user "system" with password:
+
+	Enter user-name: system/tiger
+
+	Syntax:
+	-------
+	SQL> create user username identified by password;
+
+	Example:
+	--------
+	SQL> create user mydb4pm identified by mydb4pm;
+  
+	User created.
+  
+	SQL> create user anu identified by tiger;
+  
+	User created.
+
+2. Granting privileges to the newly created users:
+
+	Until and unless we grant the previleges to the newly created users, he/she will not be having the permission to connect to the Oracle server. 
+	
+	Syntx:
+	------
+	sql>grant permission to user;
+	
+	Example:
+	--------
+	
+	login to command prompt:
+	
+	
+	SQL> conn / as sysdba
+  
+	Connected.
+  
+	SQL> 
+  
+	SQL> show user
+  
+	USER is "SYS"
+  
+	SQL> grant create table to anu;
+	
+	Grant succeeded.
+	
+	SQL>
+	------------------------------------------------------------------
+	PRIVILEGE ISSUE:
+	----------------
+	SQL> INSERT INTO EMPLOYEE1 VALUES(10, 'ANU', 'KERALA');
+  
+	INSERT INTO EMPLOYEE1 VALUES(10, 'ANU', 'KERALA')
+				*
+	ERROR at line 1:
+  
+	ORA-01950: no privileges on tablespace 'USERS'
+	
+	
+	SOLUTION:
+  
+	SQL> GRANT UNLIMITED TABLESPACE TO ANU;
+	
+	Grant succeeded.
+	
+	SQL>
+	
+	
+	SQL> grant connect to anu;
+  
+	Grant succeeded.
+  
+	SQL> 
+
+3. Changing the password:
+	
+	Syntax:
+	-------
+	SQL> password
+	
+	Example:
+	--------
+	
+	SQL> connect
+  
+	Enter user-name: mydb4pm
+  
+	Enter password:
+  
+	Connected.
+  
+	SQL> password
+  
+	Changing password for MYDB4PM
+  
+	Old password:
+  
+	New password:
+  
+	Retype new password:
+  
+	Password changed
+  
+	SQL>
+	
+	Login using new password:
+  
+	SQL> connect
+  
+	Enter user-name: mydb4pm/tiger
+  
+	Connected.
+  
+	SQL>
+
+4. How to crate new password if we forgot the old password?
+
+	Syntax:
+	-------
+	alter user username identified by new password
+	
+	Example:
+	-------
+	SQL> alter user mydb4pm identified by mydb4pm;
+
+	User altered.
+
+	SQL> connect mydb4pm/mydb4pm;
+  
+	Connected.
+  
+	SQL>
+	
+5. To unlock a user, login as an admin user and execute the following command. 
+
+	Syntax:
+	-------
+	ALTER USER username ACCOUNT UNLOCK;
+	
+	Example:
+	--------
+	SQL> connect system/tiger;
+  
+	Connected.
+  
+	SQL> alter user mydb4pm account unlock;
+
+	User altered.
+
+	SQL>
